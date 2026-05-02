@@ -1,40 +1,39 @@
-# Backlog
-
-## MVP v1 — Core Task Management
-Goal: Build a simple, working reminder system
-
-- [ ] Add reminder
-- [ ] List reminders
-- [ ] Mark reminder as done
+# 📋 Backlog — Personal Life Assistant
 
 ---
 
-## MVP v2 — Basic Life Organization
-Goal: Introduce structure
+## ✅ Done
 
-- [ ] Weekly schedule
-- [ ] Goal tracking
-
----
-
-## MVP v3 — Personal Tracking
-Goal: Track key personal metrics
-
-- [ ] Workout tracking
-- [ ] Expense tracking
+- CLI task system
+- SQLite persistence
+- AI parsing fallback
+- Daily summary generation
+- Recurring tasks (daily/weekly/monthly)
+- Filtering system (pending/completed/upcoming)
 
 ---
 
-## MVP v4 — AI Integration
-Goal: Add intelligence where useful
+## 🚧 Next Priority
 
-- [ ] Weekly summary
-- [ ] Planning suggestions
-- [ ] Habit insights
+### 1. Habit Tracking (HIGH)
+- streaks
+- missed task detection
+- consistency scoring
+
+### 2. Google Calendar Integration
+- sync tasks to calendar
+- read calendar events
+
+### 3. Smart Scheduling
+- auto-plan day based on tasks
+- priority scoring
 
 ---
 
-## Future Enhancements
-- Notifications
-- Mobile interface
-- Integrations (calendar, email)
+## 💡 Future Ideas
+
+- Voice input (speech → tasks)
+- Mobile notifications
+- Web dashboard (Streamlit or FastAPI)
+- AI productivity coach
+- Weekly review generator

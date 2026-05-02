@@ -1,29 +1,49 @@
-# Personal Life Assistant
+# 🧠 Personal Life Assistant
 
-A lightweight personal assistant built to manage daily life, tasks, and productivity with minimal friction.
+A lightweight AI-powered personal productivity assistant built in Python.
 
-## Purpose
-This project is designed to:
-- Reduce mental load
-- Organize daily activities
-- Track key aspects of life (tasks, goals, habits)
-- Introduce AI only where it adds meaningful value
+This project helps manage daily tasks, reminders, and recurring habits using a combination of rule-based logic and AI fallback parsing.
 
-## Approach
-- Start with a simple CLI-based system
-- Build feature by feature (incremental development)
-- Keep architecture modular and extensible
-- Avoid overengineering
+---
 
-## Tech Stack (Initial)
-- Python
-- SQLite
-- CLI Interface
+## 🚀 What it does (Current Features)
 
-## Development Strategy
-- Small, focused tasks
-- Version-controlled changes
-- AI (Codex) used only for implementation support
+### ✅ Core Features
+- Add and manage reminders via CLI
+- Store tasks in SQLite database
+- Mark tasks as done
+- View all / pending / completed / upcoming tasks
 
-## Current Status
-Initialization phase — setting up structure and planning MVP
+### 🤖 AI Features
+- Natural language task creation (e.g. "Pay rent next Monday")
+- AI fallback parsing when rules are not enough
+- Daily summary of tasks using AI
+
+### 🔁 Automation
+- Recurring tasks support:
+  - daily
+  - weekly
+  - monthly
+
+### 📊 Productivity Views
+- Today’s tasks summary
+- Pending tasks
+- Completed tasks
+- Upcoming tasks
+
+---
+
+## 🧰 Tech Stack
+
+- Python 3
+- SQLite (local database)
+- OpenAI API (for optional AI parsing)
+- CLI-based interface
+
+---
+
+## ▶️ How to Run
+
+### 1. Install dependencies
+```bash
+pip install openai python-dotenv
