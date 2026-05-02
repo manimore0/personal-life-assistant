@@ -3,9 +3,10 @@ from db import (
     initialize_db,
     add_reminder,
     get_all_reminders,
-    mark_reminder_done
+    mark_reminder_done,
+    get_today_reminders
 )
-from ai import parse_natural_input
+from ai import parse_natural_input, generate_daily_summary
 
 
 def print_reminders(reminders):
@@ -34,32 +35,22 @@ def main():
         print("""
 Usage:
   python3 app/main.py add "title"
-  python3 app/main.py smart "natural sentence"
+  python3 app/main.py smart "text"
   python3 app/main.py list
   python3 app/main.py done <id>
+  python3 app/main.py today
 """)
         return
 
     command = args[1]
 
-    # BASIC ADD
     if command == "add":
-        if len(args) < 3:
-            print("Please provide a title")
-            return
-
         title = args[2]
         add_reminder(title)
         print(f"Reminder added: {title}")
 
-    # AI SMART INPUT
     elif command == "smart":
-        if len(args) < 3:
-            print("Provide a sentence")
-            return
-
         user_input = args[2]
-
         parsed = parse_natural_input(user_input)
 
         add_reminder(
@@ -71,20 +62,22 @@ Usage:
         print("AI parsed reminder:")
         print(parsed)
 
-    # LIST
     elif command == "list":
         reminders = get_all_reminders()
         print_reminders(reminders)
 
-    # DONE
     elif command == "done":
-        if len(args) < 3:
-            print("Provide ID")
-            return
-
         reminder_id = int(args[2])
         mark_reminder_done(reminder_id)
         print(f"Reminder {reminder_id} marked as done")
+
+    elif command == "today":
+        reminders = get_today_reminders()
+
+        print("\n=== TODAY'S SUMMARY ===\n")
+
+        summary = generate_daily_summary(reminders)
+        print(summary)
 
     else:
         print("Unknown command")

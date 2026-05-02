@@ -81,3 +81,34 @@ def fallback_to_ai(text):
             "due_date": None,
             "description": None
         }
+
+
+def generate_daily_summary(reminders):
+    if not reminders:
+        return "You have no tasks for today. Relax or plan something productive!"
+
+    tasks = [r[1] for r in reminders]
+
+    prompt = f"""
+You are a productivity assistant.
+
+Today's tasks:
+{tasks}
+
+Give a short summary:
+- list tasks
+- suggest priority
+- give 1 productivity tip
+
+Keep it concise.
+"""
+
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.5
+    )
+
+    return response.choices[0].message.content

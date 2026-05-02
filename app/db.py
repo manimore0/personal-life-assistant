@@ -73,3 +73,20 @@ def mark_reminder_done(reminder_id):
 
     conn.commit()
     conn.close()
+
+
+def get_today_reminders():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    cursor.execute("""
+    SELECT * FROM reminders
+    WHERE due_date = ? AND status = 'pending'
+    """, (today,))
+
+    rows = cursor.fetchall()
+
+    conn.close()
+    return rows
