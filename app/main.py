@@ -5,6 +5,7 @@ from db import (
     get_all_reminders,
     mark_reminder_done
 )
+from ai import parse_natural_input
 
 
 def print_reminders(reminders):
@@ -32,7 +33,8 @@ def main():
     if len(args) < 2:
         print("""
 Usage:
-  python3 app/main.py add "title" "description(optional)" "due_date(optional)"
+  python3 app/main.py add "title"
+  python3 app/main.py smart "natural sentence"
   python3 app/main.py list
   python3 app/main.py done <id>
 """)
@@ -40,36 +42,49 @@ Usage:
 
     command = args[1]
 
-    # ADD REMINDER
+    # BASIC ADD
     if command == "add":
         if len(args) < 3:
             print("Please provide a title")
             return
 
         title = args[2]
-        description = args[3] if len(args) > 3 else None
-        due_date = args[4] if len(args) > 4 else None
-
-        add_reminder(title, description, due_date)
+        add_reminder(title)
         print(f"Reminder added: {title}")
 
-    # LIST REMINDERS
+    # AI SMART INPUT
+    elif command == "smart":
+        if len(args) < 3:
+            print("Provide a sentence")
+            return
+
+        user_input = args[2]
+
+        parsed = parse_natural_input(user_input)
+
+        add_reminder(
+            parsed["title"],
+            parsed["description"],
+            parsed["due_date"]
+        )
+
+        print("AI parsed reminder:")
+        print(parsed)
+
+    # LIST
     elif command == "list":
         reminders = get_all_reminders()
         print_reminders(reminders)
 
-    # MARK DONE
+    # DONE
     elif command == "done":
         if len(args) < 3:
-            print("Please provide reminder ID")
+            print("Provide ID")
             return
 
-        try:
-            reminder_id = int(args[2])
-            mark_reminder_done(reminder_id)
-            print(f"Reminder {reminder_id} marked as done")
-        except ValueError:
-            print("Invalid ID. Please enter a number.")
+        reminder_id = int(args[2])
+        mark_reminder_done(reminder_id)
+        print(f"Reminder {reminder_id} marked as done")
 
     else:
         print("Unknown command")
