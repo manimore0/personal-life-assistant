@@ -29,3 +29,47 @@ def initialize_db():
 
 def get_current_timestamp():
     return datetime.now().isoformat()
+
+
+def add_reminder(title, description=None, due_date=None):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    INSERT INTO reminders (title, description, due_date, status, created_at)
+    VALUES (?, ?, ?, ?, ?)
+    """, (
+        title,
+        description,
+        due_date,
+        "pending",
+        get_current_timestamp()
+    ))
+
+    conn.commit()
+    conn.close()
+
+
+def get_all_reminders():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM reminders")
+    rows = cursor.fetchall()
+
+    conn.close()
+    return rows
+
+
+def mark_reminder_done(reminder_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    UPDATE reminders
+    SET status = 'done'
+    WHERE id = ?
+    """, (reminder_id,))
+
+    conn.commit()
+    conn.close()
