@@ -50,17 +50,6 @@ def add_reminder(title, description=None, due_date=None):
     conn.close()
 
 
-def get_all_reminders():
-    conn = get_connection()
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM reminders")
-    rows = cursor.fetchall()
-
-    conn.close()
-    return rows
-
-
 def mark_reminder_done(reminder_id):
     conn = get_connection()
     cursor = conn.cursor()
@@ -75,6 +64,17 @@ def mark_reminder_done(reminder_id):
     conn.close()
 
 
+def get_all_reminders():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM reminders")
+    rows = cursor.fetchall()
+
+    conn.close()
+    return rows
+
+
 def get_today_reminders():
     conn = get_connection()
     cursor = conn.cursor()
@@ -87,6 +87,51 @@ def get_today_reminders():
     """, (today,))
 
     rows = cursor.fetchall()
+    conn.close()
+    return rows
 
+
+def get_pending_reminders():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT * FROM reminders
+    WHERE status = 'pending'
+    ORDER BY due_date ASC
+    """)
+
+    rows = cursor.fetchall()
+    conn.close()
+    return rows
+
+
+def get_done_reminders():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT * FROM reminders
+    WHERE status = 'done'
+    """)
+
+    rows = cursor.fetchall()
+    conn.close()
+    return rows
+
+
+def get_upcoming_reminders():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    cursor.execute("""
+    SELECT * FROM reminders
+    WHERE due_date > ? AND status = 'pending'
+    ORDER BY due_date ASC
+    """, (today,))
+
+    rows = cursor.fetchall()
     conn.close()
     return rows
