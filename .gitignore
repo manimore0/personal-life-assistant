@@ -9,7 +9,7 @@ __pycache__/
 .env
 
 # Database
-data.db
+*.db
 
 # Mac system files
 .DS_Store
