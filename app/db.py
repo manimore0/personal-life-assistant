@@ -63,6 +63,22 @@ def mark_reminder_done(reminder_id):
     conn.close()
 
 
+def delete_reminder(reminder_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    DELETE FROM reminders
+    WHERE id = ?
+    """, (reminder_id,))
+
+    deleted_count = cursor.rowcount
+
+    conn.commit()
+    conn.close()
+    return deleted_count
+
+
 def get_all_reminders():
     conn = get_connection()
     cursor = conn.cursor()

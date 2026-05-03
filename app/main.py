@@ -6,6 +6,7 @@ from db import (
     add_reminder,
     get_all_reminders,
     mark_reminder_done,
+    delete_reminder,
     get_today_reminders,
     get_pending_reminders,
     get_done_reminders,
@@ -55,6 +56,7 @@ Commands:
   smart "text"
   list
   done <id>
+  delete <id>
   today
   pending
   completed
@@ -126,6 +128,25 @@ Commands:
         reminder_id = int(args[2])
         mark_reminder_done(reminder_id)
         print(f"Reminder {reminder_id} marked as done")
+
+    # ---------------- DELETE ----------------
+    elif cmd == "delete":
+        if len(args) < 3:
+            print("Usage: delete <id>")
+            return
+
+        try:
+            reminder_id = int(args[2])
+        except ValueError:
+            print("Usage: delete <id>")
+            return
+
+        deleted_count = delete_reminder(reminder_id)
+
+        if deleted_count == 0:
+            print("Reminder not found")
+        else:
+            print("Reminder deleted successfully")
 
     # ---------------- TODAY SUMMARY ----------------
     elif cmd == "today":
