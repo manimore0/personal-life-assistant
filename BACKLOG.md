@@ -10,6 +10,8 @@
 - Daily summary generation
 - Recurring tasks (daily/weekly/monthly)
 - Filtering system (pending/completed/upcoming)
+- Delete reminder command
+- Edit reminder command
 
 ---
 

@@ -1,9 +1,3 @@
-
----
-
-# 📄 2. `VISION.md` (Where this is going)
-
-```markdown id="vision01"
 # 🎯 Vision — Personal Life Assistant
 
 This project aims to become a **personal AI operating layer for daily life**.
@@ -34,10 +28,25 @@ Build an assistant that can:
 
 ---
 
+## ✨ Current Capabilities
+
+Users can:
+
+- Create reminders and tasks
+- Edit existing reminder titles
+- Mark reminders as completed
+- Delete reminders
+- Manage recurring tasks
+- View pending, completed, upcoming, and today’s tasks
+- Use AI to parse natural language and generate daily summaries
+
+---
+
 ## 🔮 Future Direction
 
 ### Phase 1 (Current)
 - CLI-based task system
+- Full CRUD support (create, edit, complete, delete)
 - AI parsing + summaries
 - Recurring tasks
 

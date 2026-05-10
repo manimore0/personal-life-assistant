@@ -11,7 +11,8 @@ from db import (
     get_pending_reminders,
     get_done_reminders,
     get_upcoming_reminders,
-    handle_recurring_tasks
+    handle_recurring_tasks,
+    update_reminder_title
 )
 
 from ai import parse_natural_input, generate_daily_summary
@@ -44,7 +45,7 @@ def parse_date_keyword(keyword):
 def main():
     initialize_db()
 
-    # 🔁 handle recurring tasks safely
+    # Handle recurring tasks
     handle_recurring_tasks()
 
     args = sys.argv
@@ -57,6 +58,7 @@ Commands:
   list
   done <id>
   delete <id>
+  edit <id> "new title"
   today
   pending
   completed
@@ -69,7 +71,7 @@ Commands:
     # ---------------- ADD ----------------
     if cmd == "add":
         if len(args) < 3:
-            print("Usage: add \"title\" [today|tomorrow] [recurrence]")
+            print('Usage: add "title" [today|tomorrow] [recurrence]')
             return
 
         title = args[2]
@@ -100,7 +102,7 @@ Commands:
     # ---------------- SMART ----------------
     elif cmd == "smart":
         if len(args) < 3:
-            print("Usage: smart \"text\"")
+            print('Usage: smart "text"')
             return
 
         user_input = args[2]
@@ -166,6 +168,28 @@ Commands:
     elif cmd == "upcoming":
         print_reminders(get_upcoming_reminders())
 
+    # ---------------- EDIT ----------------
+    elif cmd == "edit":
+        if len(args) < 4:
+            print('Usage: edit <id> "new title"')
+            return
+
+        try:
+            reminder_id = int(args[2])
+        except ValueError:
+            print("Invalid reminder ID")
+            return
+
+        new_title = args[3]
+
+        result = update_reminder_title(reminder_id, new_title)
+
+        if result == 0:
+            print("Reminder not found")
+        else:
+            print("Reminder updated successfully")
+
+    # ---------------- UNKNOWN COMMAND ----------------
     else:
         print("Unknown command")
 

@@ -203,3 +203,18 @@ def handle_recurring_tasks():
 
     conn.commit()
     conn.close()
+
+def update_reminder_title(reminder_id, new_title):
+    conn = sqlite3.connect("data.db")
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "UPDATE reminders SET title = ? WHERE id = ?",
+        (new_title, reminder_id)
+    )
+
+    conn.commit()
+    updated = cursor.rowcount
+    conn.close()
+
+    return updated
